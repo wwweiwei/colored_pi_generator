@@ -1,0 +1,9 @@
+epochs: 3
+batch_size: 1
+hidden_dim: 256
+device: 'cpu'
+num_workers: 4
+result_path: './result/'
+gen_every_epochs: True
+seed: 10
+retrain: False
