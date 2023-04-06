@@ -35,7 +35,7 @@ class Decoder(nn.Module):
     def forward(self, z):
         z = F.relu(self.fc_emb(z))
         z = self.transformer_layer(z.unsqueeze(0).unsqueeze(0))
-        z = torch.relu(self.fc_output(z))
+        z = torch.sigmoid(self.fc_output(z))
 
         return z.reshape((5000, 5))
 
