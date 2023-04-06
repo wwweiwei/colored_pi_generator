@@ -1,4 +1,4 @@
-epochs: 30
+epochs: 100
 batch_size: 1
 latent_dim: 256
 device: 'cpu'

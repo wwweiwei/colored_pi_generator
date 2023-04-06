@@ -55,7 +55,7 @@ def xy_rescaling(xy_coor):
     """
     Rescale the x-coordinates and y-coordinates into the range of (0, 300)
     """
-    return xy_coor[:, 0] * 300, xy_coor[:, 1] * 300
+    return (xy_coor[:, 0]*300).astype(int), (xy_coor[:, 1]*300).astype(int)
 
 def rgb_rescaling(rgb_values):
     """

@@ -15,11 +15,11 @@ class VariationalEncoder(nn.Module):
         self.fc_var = nn.Linear(256, latent_dim)
 
     def forward(self, x):
-        # x = torch.flatten(x, start_dim=0)
+        x = torch.flatten(x, start_dim=0)
         x = F.relu(self.fc_input(x))
-        x = self.encoder_layer(x)
-        mean = self.fc_mean(x)
-        log_var = self.fc_var(x)
+        x = self.encoder_layer(x.unsqueeze(0).unsqueeze(0))
+        mean = self.fc_mean(x.squeeze())
+        log_var = self.fc_var(x.squeeze())
         return mean, log_var
 
 class Decoder(nn.Module):
@@ -34,8 +34,9 @@ class Decoder(nn.Module):
 
     def forward(self, z):
         z = F.relu(self.linear1(z))
-        z =  self.encoder_layer(z)
+        z = self.encoder_layer(z.unsqueeze(0).unsqueeze(0))
         z = torch.sigmoid(self.linear2(z))
+
         return z.reshape((5000, 5))
 
 class VariationalAutoencoder(nn.Module):
