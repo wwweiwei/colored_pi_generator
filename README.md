@@ -56,7 +56,7 @@ where $\beta$ from 0 linear growth to 1 as the \#epochs increase
 ## Usage
 * Build environment
     ```
-    conda env create -f environment.yml
+    conda env create -f environment.yaml
     ```
 * Put data in `./gen_ml_quiz_content/`
 * Run script
