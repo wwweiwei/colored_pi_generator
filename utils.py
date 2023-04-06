@@ -21,7 +21,7 @@ def get_config(config_filename='config.yaml'):
     """
     with open(config_filename, 'r') as file:
         config = yaml.safe_load(file)
-    latent_dim = config['hidden_dim']
+    latent_dim = config['latent_dim']
     epochs = config['epochs']
     batch_size = config['batch_size']
     device = config['device']
@@ -29,10 +29,11 @@ def get_config(config_filename='config.yaml'):
     gen_every_epochs = config['gen_every_epochs']
     num_workers = config['num_workers']
     retrain = config['retrain']
+    num_head = config['num_head']
     seed = config['seed']
     set_seeds(seed)
 
-    return latent_dim, epochs, batch_size, device, result_path, gen_every_epochs, num_workers, retrain
+    return latent_dim, epochs, batch_size, device, result_path, gen_every_epochs, num_workers, retrain, num_head
 
 def draw_loss_curve(total_num_epoch, total_loss, total_kl, total_rc, result_path):
     """
@@ -55,7 +56,7 @@ def xy_rescaling(xy_coor):
     """
     Rescale the x-coordinates and y-coordinates into the range of (0, 300)
     """
-    return xy_coor[:, 0] * 300, xy_coor[:, 1] * 300
+    return (xy_coor[:, 0]*300).astype(int), (xy_coor[:, 1]*300).astype(int)
 
 def rgb_rescaling(rgb_values):
     """

@@ -19,6 +19,12 @@ class PiDataset(Dataset):
     def __len__(self):
         return len(self.data)
     
+    def get_total_num_of_pixel(self):
+        return len(self.data[0])
+    
+    def get_total_num_of_dim(self):
+        return len(self.data[0][0])    
+    
     def get_total_num_of_data(self):
         """
         Return the total number of data
