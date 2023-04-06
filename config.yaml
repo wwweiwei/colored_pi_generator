@@ -7,3 +7,4 @@ result_path: './result/'
 gen_every_epochs: True
 seed: 10
 retrain: True
+num_head: 4

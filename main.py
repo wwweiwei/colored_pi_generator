@@ -18,7 +18,6 @@ class PiGenerator:
         self.result_path = result_path
         self.num_pixel = num_pixel
         self.z = torch.randn(256).float().to(device)
-        # self.z = torch.randn(1, self.num_pixel, self.latent_dim).float().to(device)
 
     def loss_function(self, x, x_hat, mean, log_var):
         """
@@ -75,14 +74,14 @@ class PiGenerator:
 
 
 if __name__ == '__main__':
-    latent_dim, epochs, batch_size, device, result_path, gen_every_epochs, num_workers, retrain = get_config()
+    latent_dim, epochs, batch_size, device, result_path, gen_every_epochs, num_workers, retrain, num_head = get_config()
     
     # Load the data
     data = PiDataset()
     pi_dataloader = DataLoader(dataset=data, batch_size=batch_size, shuffle=False, num_workers=num_workers)
     
     # Call the class to construct an object
-    model = VariationalAutoencoder(input_dim=data.get_total_num_of_data(), latent_dim=latent_dim).to(device)
+    model = VariationalAutoencoder(input_dim=data.get_total_num_of_data(), latent_dim=latent_dim, num_head=num_head).to(device)
     print(f'model: {model}')
     pi_generator = PiGenerator(model=model, latent_dim=latent_dim, epochs=epochs, result_path=result_path, num_pixel=data.get_total_num_of_pixel())
     
