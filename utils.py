@@ -21,7 +21,7 @@ def get_config(config_filename='config.yaml'):
     """
     with open(config_filename, 'r') as file:
         config = yaml.safe_load(file)
-    latent_dim = config['hidden_dim']
+    latent_dim = config['latent_dim']
     epochs = config['epochs']
     batch_size = config['batch_size']
     device = config['device']
