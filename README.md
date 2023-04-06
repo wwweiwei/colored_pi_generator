@@ -20,7 +20,7 @@ Build a generative model `colored_pi_generator` whose output is a 5-dimensional 
 * **Encoder**
     * Linear Layer -> ReLU Activation Function -> Transformer Encoder Layer
 * **Generator**
-    * Linear Layer -> ReLU Activation Function -> Transformer Encoder Layer -> Linear Layer -> ReLU Activation Function
+    * Linear Layer -> ReLU Activation Function -> Transformer Encoder Layer -> Linear Layer -> Sigmoid Activation Function
 
 ### Loss Function
 * **Reconstruction loss ($Loss_{recons}$)**: how well VAE can reconstruct the input from the latent space
@@ -67,13 +67,13 @@ where $\beta$ from 0 linear growth to 1 as the \#epochs increase
 - - -
 
 ## Dataset
-* Please put all the data under './gen_ml_quiz_content' folder. For more details, please reference to [Input](###Input).
+* Please put all the data under `'./gen_ml_quiz_content'` folder. For more details, please reference to [Input](###Input).
 
 ## Hyperparameter Setting
 * All the experiments are done by the hyperparameters below. Feel free to set your own hyperparameter in `config.yaml`
-    | epochs | batch\_size | hidden\_dim | device | num\_workers | result\_path | gen\_every\_epochs | seed | retrain |
-    |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-    | 100 | 1 | 256 | 'cpu' | 4 | './result/' | True | 10 | True |
+    | epochs | batch\_size | hidden\_dim | device | num\_workers | result\_path | gen\_every\_epochs | seed | retrain | num_head |
+    |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+    | 100 | 1 | 256 | 'cpu' | 4 | './result/' | True | 10 | True | 4 |
 
 - - -
 
