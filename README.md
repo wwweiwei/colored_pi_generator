@@ -71,7 +71,7 @@ where $\beta$ from 0 linear growth to 1 as the \#epochs increase
 
 ## Hyperparameter Setting
 * All the experiments are done by the hyperparameters below. Feel free to set your own hyperparameter in `config.yaml`
-    | epochs | batch\_size | hidden\_dim | device | num\_workers | result\_path | gen\_every\_epochs | seed | retrain | num_head |
+    | epochs | batch\_size | latent\_dim | device | num\_workers | result\_path | gen\_every\_epochs | seed | retrain | num_head |
     |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
     | 100 | 1 | 256 | 'cpu' | 4 | './result/' | True | 10 | True | 4 |
 

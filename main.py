@@ -17,7 +17,7 @@ class PiGenerator:
         self.epochs = epochs
         self.result_path = result_path
         self.num_pixel = num_pixel
-        self.z = torch.randn(256).float().to(device)
+        self.z = torch.randn(latent_dim).float().to(device)
 
     def loss_function(self, x, x_hat, mean, log_var):
         """
