@@ -10,14 +10,15 @@ from model import VariationalAutoencoder
 from utils import *
 
 class PiGenerator:
-    def __init__(self, model, latent_dim, epochs, result_path, num_pixel):
+    def __init__(self, model, latent_dim, epochs, result_path, batch_size, seq_len):
         super(PiGenerator, self).__init__()
         self.model = model
         self.latent_dim = latent_dim
         self.epochs = epochs
         self.result_path = result_path
-        self.num_pixel = num_pixel
-        self.z = torch.randn(latent_dim).float().to(device)
+        self.z = torch.randn([batch_size, seq_len, latent_dim]).float().to(device)
+        num_param = sum(p.numel() for p in self.model.parameters() if p.requires_grad)
+        print(f'#params: {num_param}')
 
     def loss_function(self, x, x_hat, mean, log_var):
         """
@@ -37,6 +38,7 @@ class PiGenerator:
         for epoch in pbar:
             for _, x in enumerate(data):
                 x = x.float().to(device)
+                self.model.train()
                 opt.zero_grad()
                 x_hat, mean, log_var = self.model(x.float())
 
@@ -65,12 +67,12 @@ class PiGenerator:
         """
         self.model.eval()  
         with torch.no_grad():
-            outputs = self.model.decoder(self.z).squeeze().cpu().numpy()
+            outputs = self.model.decoder(self.z).cpu().numpy()
 
-        x_coor, y_coor = xy_rescaling(xy_coor=outputs[:, 0:2])
-        rgb_values = rgb_rescaling(rgb_values=outputs[:, 2:5])
+        x_coor, y_coor = xy_rescaling(xy_coor=outputs[:, 0:2, :])
+        r_value, g_value, b_value = rgb_rescaling(rgb_values=outputs[:, 2:5, :])
 
-        generate_img(x_coor, y_coor, rgb_values, self.result_path, cur_epoch)
+        generate_img(x_coor, y_coor, r_value, g_value, b_value, self.result_path, cur_epoch)
 
 
 if __name__ == '__main__':
@@ -81,10 +83,10 @@ if __name__ == '__main__':
     pi_dataloader = DataLoader(dataset=data, batch_size=batch_size, shuffle=False, num_workers=num_workers)
     
     # Call the class to construct an object
-    model = VariationalAutoencoder(input_dim=data.get_total_num_of_data(), latent_dim=latent_dim, num_head=num_head).to(device)
+    model = VariationalAutoencoder(input_dim=1, latent_dim=latent_dim, num_head=num_head).to(device)
     print(f'model: {model}')
-    pi_generator = PiGenerator(model=model, latent_dim=latent_dim, epochs=epochs, result_path=result_path, num_pixel=data.get_total_num_of_pixel())
-    
+    pi_generator = PiGenerator(model=model, latent_dim=latent_dim, epochs=epochs, result_path=result_path, batch_size=batch_size, seq_len=data.get_seq_len())
+
     if retrain:
         # Train VAE
         total_loss, total_kl, total_rc = pi_generator.train(data=pi_dataloader, gen_every_epochs=gen_every_epochs)

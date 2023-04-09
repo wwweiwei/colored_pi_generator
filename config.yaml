@@ -1,8 +1,8 @@
 epochs: 100
-batch_size: 1
-latent_dim: 256
+batch_size: 5000
+latent_dim: 32
 device: 'cpu'
-num_workers: 4
+num_workers: 0
 result_path: './result/'
 gen_every_epochs: True
 seed: 10
