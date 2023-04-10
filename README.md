@@ -14,7 +14,11 @@ Build a generative model `colored_pi_generator` whose output is a 5-dimensional 
 
 ## Method - VAE (Variational Autoencoder) with Transformer Encoder Layer
 ### Model Architecture
-<img src='./assets/framework_1.png' alt="odel framework" height="250px">
+* Model A: Input Dimension: 1x1x25000 (branch/vae_with_transformer_encoder_layer_1distribution)
+<img src='./assets/framework_1.png' alt="model framework" height="250px">
+
+* Model B: Input Dimension: 5000x5x1 (main)
+<img src='./assets/framework_5.png' alt="model framework" height="190px">
 
 * VAE provides a probabilistic manner for describing an observation in latent space. Thus, we are going to formulate our encoder to describe a **probability distribution** for each latent attribute.
 * **Encoder**
@@ -33,7 +37,7 @@ where $\beta$ from 0 linear growth to 1 as the \#epochs increase
 * [Reference](https://medium.com/mlearning-ai/a-must-have-training-trick-for-vae-variational-autoencoder-d28ff53b0023)
 
 - - -
-## Results
+## Results of Model A
 * Training Curves
 
 |Vanilla VAE|VAE with **Transformer**<br /> **Encoder Layer**|
